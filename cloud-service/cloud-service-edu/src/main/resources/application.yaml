@@ -1,0 +1,24 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: cloud-service-edu
+  profiles:
+    active: dev
+  datasource:
+#    sql-script-encoding: utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vesns_edu?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.vesns.eduservice.mapper
