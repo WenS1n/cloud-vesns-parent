@@ -11,6 +11,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>cloud-service-edu</module>
+        <module>cloud-service-oss</module>
     </modules>
     <packaging>pom</packaging>
     <artifactId>cloud-service</artifactId>

@@ -1,6 +1,7 @@
 package cn.vesns.eduservice.controller;
 
 
+import cn.vesns.baseservice.handler.VesnsException;
 import cn.vesns.eduservice.entity.EduTeacher;
 import cn.vesns.eduservice.entity.vo.TeacherVO;
 import cn.vesns.eduservice.service.EduTeacherService;
@@ -8,6 +9,7 @@ import cn.vesns.utils.ResponseResult;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 
@@ -31,6 +33,7 @@ import java.util.Map;
 @Api(description = "讲师管理")
 @RestController
 @RequestMapping("/eduteacher")
+@CrossOrigin
 public class EduTeacherController {
 
     @Resource
@@ -79,13 +82,13 @@ public class EduTeacherController {
         Integer level = teacherVO.getLevel();
         String begin = teacherVO.getBegin();
         String end = teacherVO.getEnd();
-        LambdaQueryWrapper<EduTeacher> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        if (!StringUtils.isEmpty(name) || !StringUtils.isEmpty(level) || !StringUtils.isEmpty(begin)|| !StringUtils.isEmpty(end) ) {
-            lambdaQueryWrapper.like(EduTeacher::getName, name)
-                    .or().eq(EduTeacher::getLevel, level)
-                    .or().ge(EduTeacher::getGmtCreate, begin)
-                    .or().le(EduTeacher::getGmtCreate, end);
-        }
+//        LambdaQueryWrapper<EduTeacher> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        if (!StringUtils.isEmpty(name) || !StringUtils.isEmpty(level) || !StringUtils.isEmpty(begin)|| !StringUtils.isEmpty(end) ) {
+//            lambdaQueryWrapper.like(EduTeacher::getName, name)
+//                    .or().eq(EduTeacher::getLevel, level)
+//                    .or().ge(EduTeacher::getGmtCreate, begin)
+//                    .or().le(EduTeacher::getGmtCreate, end);
+//        }
 //        if (!StringUtils.isEmpty(level)) {
 //            lambdaQueryWrapper.eq(EduTeacher::getLevel, level);
 //        }
@@ -95,12 +98,56 @@ public class EduTeacherController {
 //        if (!StringUtils.isEmpty(end)) {
 //            lambdaQueryWrapper.le(EduTeacher::getGmtCreate, end);
 //        }
+        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
+        if(!StringUtils.isEmpty(name)){
+            wrapper.like("name",name);
+        }
+        if(!StringUtils.isEmpty(level)){
+            wrapper.eq("level",level);
+        }
+        if(!StringUtils.isEmpty(begin)){
+            wrapper.ge("gmt_create",begin);
+        }
+        if(!StringUtils.isEmpty(end)){
+            wrapper.le("gmt_create",end);
+        }
+
         Page<EduTeacher> page = new Page<>(current, limit);
-        eduTeacherService.page(page, lambdaQueryWrapper);
+        eduTeacherService.page(page, wrapper);
         List<EduTeacher> records = page.getRecords();
         long total = page.getTotal();
         return ResponseResult.ok().data("list", records).data("total", total);
     }
+
+    @ApiOperation(value = "添加讲师")
+    @PostMapping("/addTeacher")
+    public ResponseResult addTeacher(@RequestBody EduTeacher eduTeacher) {
+        boolean save = eduTeacherService.save(eduTeacher);
+        if (save) {
+            return ResponseResult.ok();
+        }else {
+            return ResponseResult.error();
+        }
+    }
+
+    @ApiOperation(value = "根据id查询讲师")
+    @GetMapping("/getTeacherById/{id}")
+    public ResponseResult getTeacherById(@PathVariable String id) {
+        EduTeacher byId = eduTeacherService.getById(id);
+        return ResponseResult.ok().data("eduTeacher",byId);
+    }
+
+    @ApiOperation(value = "修改讲师")
+    @PostMapping("/updateTeacher")
+    public ResponseResult updateTeacher(@RequestBody EduTeacher eduTeacher) {
+        boolean update = eduTeacherService.updateById(eduTeacher);
+        if (update) {
+            return ResponseResult.ok();
+        }else {
+            return ResponseResult.error();
+        }
+    }
+
 
 }
 
