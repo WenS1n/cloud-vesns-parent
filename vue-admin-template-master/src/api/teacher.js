@@ -39,7 +39,14 @@ export default {
             method: 'post',
             data: eduTeacher  //转化json传递
           }) 
-    }
+    },
+    // 查询讲师
+    getAllTeacher(){
+        return request ({
+          url: `/eduteacher/queryAll`,
+          method: 'get'
+        })
+      },
 
 
 }

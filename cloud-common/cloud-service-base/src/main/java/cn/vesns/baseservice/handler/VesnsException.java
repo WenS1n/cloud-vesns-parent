@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
  * @date: 2021-12-15 21:10
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class VesnsException extends RuntimeException {
 
     @ApiModelProperty(value = "状态码")
@@ -23,4 +21,16 @@ public class VesnsException extends RuntimeException {
     private String msg;
 
 
+    public VesnsException(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return "VesnsException{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
 }

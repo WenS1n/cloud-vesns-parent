@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/ossservice/fileoss")
+@RequestMapping("/eduoss/fileoss")
 @Api(description = "文件管理")
 public class FileController {
 
