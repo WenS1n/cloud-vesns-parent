@@ -14,6 +14,14 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    circuitbreaker:
+      hystrix:
+        enabled: true
+
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -22,3 +30,22 @@ mybatis-plus:
     banner: false
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: cn.vesns.eduservice.mapper
+
+
+aliyun:
+  accessKey: LTAI4GGvwuQC9TMmBub74w96
+  accessKeySecret: ne6yPRQ8Ohwjh7qmJngzeLYlo6ihD4
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+

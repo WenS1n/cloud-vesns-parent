@@ -1,0 +1,38 @@
+server:
+  port: 8005
+spring:
+  application:
+    name: cloud-service-sms
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    database: 0
+    timeout: 180000
+    lettuce:
+      pool:
+        max-wait: -1
+        max-idle: 5
+        max-active: 20
+tencent:
+  sms:
+    # 配置腾讯云API密钥的SecretId
+    secretId: AKIDTmoa6ML3TdW7RUHn1yf6GnCKBl35pIUP
+    # 配置腾讯云API密钥的SecretKey
+    secretKey: f3A1buwhBPM2RZQ0JL6ZlhLioeDVWHkw
+    # 配置短信应用的SDKAppID
+    appId: 1400586146
+    # 配置签名内容
+    sign: "文盛的学习测试"
+    # 配置模板ID
+    templateId: 1169905
+    # 配置过期时间
+    expireTime: 5
+    # 配置redis存储的key的前缀
+    phonePrefix: REGIST

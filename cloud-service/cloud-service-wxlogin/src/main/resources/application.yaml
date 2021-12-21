@@ -1,0 +1,68 @@
+server:
+  port: 8150
+spring:
+  application:
+    name: cloud-servicer-wxlogin
+  profiles:
+    active: dev
+  datasource:
+    #    sql-script-encoding: utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vesns_ucenter?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    circuitbreaker:
+      hystrix:
+        enabled: true
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    database: 0
+    timeout: 180000
+    lettuce:
+      pool:
+        max-wait: -1
+        max-idle: 5
+        max-active: 20
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.vesns.wxlogin.mapper
+
+wx:
+  open:
+    app_id: wxed9954c01bb89b47
+    app_secret: a7482517235173ddb4083788de60b90e
+#    redirect_url: http://guli.shop/api/ucenter/wx/callback
+    redirect_url: http://guli:shop/api/ucenter/wx/callback
+
+
+aliyun:
+  accessKey: LTAI4GGvwuQC9TMmBub74w96
+  accessKeySecret: ne6yPRQ8Ohwjh7qmJngzeLYlo6ihD4
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+

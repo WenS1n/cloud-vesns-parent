@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ConstantPropertiesUtil implements InitializingBean {
+
     @Value("${aliyun.oss.endpoint}")
     private String endpoint;
 

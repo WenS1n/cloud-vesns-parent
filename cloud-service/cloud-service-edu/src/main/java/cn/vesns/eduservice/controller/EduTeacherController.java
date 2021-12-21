@@ -109,7 +109,7 @@ public class EduTeacherController {
             wrapper.ge("gmt_create",begin);
         }
         if(!StringUtils.isEmpty(end)){
-            wrapper.le("gmt_create",end);
+            wrapper.le("gmt_modified",end);
         }
 
         Page<EduTeacher> page = new Page<>(current, limit);

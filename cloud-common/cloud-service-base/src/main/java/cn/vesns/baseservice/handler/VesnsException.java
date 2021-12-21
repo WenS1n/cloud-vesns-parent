@@ -18,19 +18,20 @@ public class VesnsException extends RuntimeException {
     @ApiModelProperty(value = "状态码")
     private Integer code;
 
-    private String msg;
+    private String message;
 
 
-    public VesnsException(Integer code, String msg) {
+    public VesnsException(Integer code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
+
 
     @Override
     public String toString() {
         return "VesnsException{" +
                 "code=" + code +
-                ", msg='" + msg + '\'' +
+                ", msg='" + message + '\'' +
                 '}';
     }
 }

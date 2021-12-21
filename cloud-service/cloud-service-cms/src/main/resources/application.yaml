@@ -1,0 +1,37 @@
+server:
+  port: 8004
+spring:
+  application:
+    name: cloud-service-cms
+  datasource:
+    #    sql-script-encoding: utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vesns_cms?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  redis:
+    port: 6379
+    host: 127.0.0.1
+    database: 0
+    timeout: 180000
+    lettuce:
+      pool:
+        max-wait: -1
+        max-idle: 5
+        max-active: 20
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    banner: false
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.vesns.cmsservice.mapper

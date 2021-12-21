@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.vesns.eduservice.mapper.EduCourseMapper">
+    <select id="getCourseInfoByCourseId" resultType="cn.vesns.eduservice.entity.vo.CoursePublishVO">
+        SELECT ec.id,
+               ec.title,
+               ec.cover,
+               ec.price,
+               ec.lesson_num AS lessonNum,
+               et.name       AS teacherName,
+               es1.title     AS subjectLevelOne,
+               es2.title     AS subjectLevelTwo
+        FROM vesns_edu.edu_course ec
+                     INNER JOIN vesns_edu.edu_teacher et ON ec.teacher_id = et.id
+                     INNER JOIN vesns_edu.edu_subject es1 ON ec.subject_parent_id = es1.id
+                     INNER JOIN vesns_edu.edu_subject es2 ON ec.subject_id = es2.id
+        WHERE ec.id = #{id};
+    </select>
+</mapper>

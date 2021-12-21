@@ -74,7 +74,7 @@
 
       <!-- 课程简介 TODO -->
       <el-form-item label="课程简介">
-        <el-input v-model="courseInfo.description" />
+        <Tinymce :height="300" v-model="courseInfo.description"></Tinymce>
       </el-form-item>
 
       <!-- 课程封面-->
@@ -87,7 +87,7 @@
           :action="BASE_API + '/eduoss/fileoss/uploadFile'"
           class="avatar-uploader"
         >
-          <img :src="courseInfo.cover" style="width:500px;height:240px" />
+          <img :src="courseInfo.cover" style="width: 500px; height: 240px" />
         </el-upload>
       </el-form-item>
 
@@ -113,9 +113,16 @@
 import course from "@/api/course";
 import teacher from "@/api/teacher";
 import subject from "@/api/subject";
+import Tinymce from "@/components/Tinymce";
+import Tinymce1 from "../../components/Tinymce/index.vue";
 export default {
+  components: {
+    Tinymce,
+    Tinymce1,
+  },
   data() {
     return {
+      courseId: "",
       BASE_API: process.env.BASE_API, // 接口API地址
       saveBtnDisabled: false, // 保存按钮是否禁用
       courseInfo: {
@@ -129,10 +136,35 @@ export default {
     };
   },
   created() {
+    if (this.$route.params && this.$route.params.id) {
+      this.courseId = this.$route.params.id;
+      course.getCourseInfoById(this.courseId).then((response) => {
+        this.courseInfo = response.data.courseInfo;
+        this.getCourseInfoByCourseId();
+      });
+    } else {
+      this.getAllSubjectInfo();
+    }
+
     this.getTeacherList();
-    this.getAllSubjectInfo();
+    // this.getAllSubjectInfo();
   },
   methods: {
+    getCourseInfoByCourseId() {
+      course.getCourseInfoById(this.courseId).then((response) => {
+        this.courseInfo = response.data.courseInfo;
+        subject.getAllSubject().then((response) => {
+          this.oneSubjectList = response.data.allSubject;
+          // 初始化二级分类
+          for (let i = 0; i < this.oneSubjectList.length; i++) {
+            let oneSubject = this.oneSubjectList[i];
+            if (oneSubject.id === this.courseInfo.subjectParentId) {
+              this.twoSubjectList = oneSubject.children;
+            }
+          }
+        });
+      });
+    },
     //讲师初始化方法
     getTeacherList() {
       teacher.getAllTeacher().then((response) => {
@@ -173,13 +205,37 @@ export default {
       }
       return isJPG && isLt2M;
     },
+
+    /**
+     * 添加或者修改后跳转下一步
+     */
     next() {
+      if (this.courseInfo.id) {
+        this.updateCourseInfo();
+      } else {
+        this.saveCourseInfo();
+      }
+    },
+
+    // 添加
+    saveCourseInfo() {
       course.addCourseInfo(this.courseInfo).then((response) => {
         this.$message({
           type: "success",
           message: "添加成功!",
         });
-        //this.$router.push({ path: '/edu/course/chapter/1' })
+        this.courseId = response.data.courseId;
+        this.$router.push({ path: `/course/chapter/${this.courseId}` });
+      });
+    },
+    // 修改
+    updateCourseInfo() {
+      course.updateCourseInfo(this.courseInfo).then((response) => {
+        this.$message({
+          type: "success",
+          message: "修改成功!",
+        });
+        this.$router.push({ path: `/course/chapter/${this.courseId}` });
       });
     },
   },
@@ -187,4 +243,7 @@ export default {
 </script>
 
 <style>
+.tintmce-container {
+  line-height: 29px;
+}
 </style>
