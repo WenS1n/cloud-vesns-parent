@@ -110,7 +110,7 @@ public class VodController {
     public ResponseResult getPlayAuth(@PathVariable String vid){
         try {
             //（1）创建初始化对象
-            DefaultAcsClient client = AliyunVodSDKUtil.initVodClient("LTAI4GGvwuQC9TMmBub74w96", "ne6yPRQ8Ohwjh7qmJngzeLYlo6ihD4");
+            DefaultAcsClient client = AliyunVodSDKUtil.initVodClient("", "");
             //（2）创建request、response对象
             GetVideoPlayAuthRequest request = new GetVideoPlayAuthRequest();
             GetVideoPlayAuthResponse response = new GetVideoPlayAuthResponse();
