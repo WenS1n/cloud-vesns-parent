@@ -77,7 +77,6 @@ public class EduCourseController {
 
     @ApiOperation(value = "查询所有课程信息")
     @GetMapping("/getCourseInfo")
-    // TODO: 实现带条件，带分页查询
     public ResponseResult getCourseInfo() {
         List<EduCourse> list = eduCourseService.list(null);
         return ResponseResult.ok().data("list",list);

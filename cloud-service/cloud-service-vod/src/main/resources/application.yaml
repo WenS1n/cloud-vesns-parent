@@ -14,6 +14,6 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
 aliyun:
-    accessKey: LTAI4GGvwuQC9TMmBub74w96 # 访问身份验证中用到用户标识
-    accessKeySecret: ne6yPRQ8Ohwjh7qmJngzeLYlo6ihD4 # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    accessKey:  # 访问身份验证中用到用户标识
+    accessKeySecret:  # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
 

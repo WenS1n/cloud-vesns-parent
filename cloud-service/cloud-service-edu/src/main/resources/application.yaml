@@ -33,8 +33,8 @@ mybatis-plus:
 
 
 aliyun:
-  accessKey: LTAI4GGvwuQC9TMmBub74w96
-  accessKeySecret: ne6yPRQ8Ohwjh7qmJngzeLYlo6ihD4
+  accessKey:
+  accessKeySecret:
 feign:
   hystrix:
     enabled: true

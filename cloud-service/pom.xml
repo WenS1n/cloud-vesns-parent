@@ -17,6 +17,8 @@
         <module>cloud-service-sms</module>
         <module>cloud-service-ucenter</module>
         <module>cloud-service-wxlogin</module>
+        <module>cloud-service-order</module>
+        <module>cloud-service-statistics</module>
     </modules>
     <packaging>pom</packaging>
     <artifactId>cloud-service</artifactId>

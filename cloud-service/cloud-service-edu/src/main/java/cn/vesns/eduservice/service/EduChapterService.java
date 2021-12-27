@@ -17,4 +17,6 @@ import java.util.List;
 public interface EduChapterService extends IService<EduChapter> {
 
     List<ChapterVO> getChapterVideoByCourseId(String courseId);
+
+
 }

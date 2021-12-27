@@ -76,7 +76,7 @@ export default {
             // cookie.set("guli_ucenter", this.loginInfo, { domain: "localhost" });
             cookie.set("guli_ucenter", this.loginInfo);
             //跳转页面
-            // window.location.href = "/";
+            window.location.href = "/";
           });
         }
       });

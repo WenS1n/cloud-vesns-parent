@@ -8,6 +8,7 @@ import cn.vesns.eduservice.mapper.EduChapterMapper;
 import cn.vesns.eduservice.service.EduChapterService;
 import cn.vesns.eduservice.service.EduVideoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -39,37 +40,67 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
     public List<ChapterVO> getChapterVideoByCourseId(String courseId) {
 
         // 根据courseId查询章节集合信息
-        LambdaQueryWrapper<EduChapter> chapterLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        chapterLambdaQueryWrapper.eq(EduChapter::getCourseId,courseId);
-        List<EduChapter> eduChapterList = baseMapper.selectList(chapterLambdaQueryWrapper);
-        // 根据courseId查询小节集合信息
-        LambdaQueryWrapper<EduVideo> videoLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        videoLambdaQueryWrapper.eq(EduVideo::getCourseId,courseId);
-        List<EduVideo> videoList = videoService.list(videoLambdaQueryWrapper);
-        // 遍历章节信息、封装章节信息
-        List<ChapterVO> chapterVOList = new ArrayList<>();
-        for (int i = 0; i < eduChapterList.size(); i++) {
-            EduChapter eduChapter = eduChapterList.get(i);
-            ChapterVO chapterVO = new ChapterVO();
-            BeanUtils.copyProperties(eduChapter, chapterVO);
-            chapterVOList.add(chapterVO);
-            // 遍历章节关联小节信息进行封装
-            List<VideoVO> VideoVOList = new ArrayList<>();
+//        LambdaQueryWrapper<EduChapter> chapterLambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        chapterLambdaQueryWrapper.eq(EduChapter::getCourseId,courseId);
+//        List<EduChapter> eduChapterList = baseMapper.selectList(chapterLambdaQueryWrapper);
+//        // 根据courseId查询小节集合信息
+//        LambdaQueryWrapper<EduVideo> videoLambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        videoLambdaQueryWrapper.eq(EduVideo::getCourseId,courseId);
+//        List<EduVideo> videoList = videoService.list(videoLambdaQueryWrapper);
+//        // 遍历章节信息、封装章节信息
+//        List<ChapterVO> chapterVOList = new ArrayList<>();
+//        for (int i = 0; i < eduChapterList.size(); i++) {
+//            EduChapter eduChapter = eduChapterList.get(i);
+//            ChapterVO chapterVO = new ChapterVO();
+//            BeanUtils.copyProperties(eduChapter, chapterVO);
+//            chapterVOList.add(chapterVO);
+//            // 遍历章节关联小节信息进行封装
+//            List<VideoVO> VideoVOList = new ArrayList<>();
+//            for (int m = 0; m < videoList.size(); m++) {
+//                EduVideo eduVideo = videoList.get(m);
+//                if (eduChapter.getId().equals(eduVideo.getChapterId())) {
+//                    VideoVO videoVO = new VideoVO();
+//                    BeanUtils.copyProperties(eduVideo, videoVO);
+//                    VideoVOList.add(videoVO);
+//                }
+//                chapterVO.setChildren(VideoVOList);
+//            }
+//
+//        }
+//        return chapterVOList;
+
+        //1根据courseId查询章节集合信息
+        QueryWrapper<EduChapter> chapterWrapper = new QueryWrapper<>();
+        chapterWrapper.eq("course_id",courseId);
+        List<EduChapter> chapterList = baseMapper.selectList(chapterWrapper);
+        //2根据courseId查询小节集合信息
+        QueryWrapper<EduVideo> videoWrapper = new QueryWrapper<>();
+        videoWrapper.eq("course_id",courseId);
+        List<EduVideo> videoList = videoService.list(videoWrapper);
+        //3遍历章节信息进行封装
+        List<ChapterVO> chapterVideoList = new ArrayList<>();
+        for (int i = 0; i <chapterList.size() ; i++) {
+            EduChapter eduChapter = chapterList.get(i);
+            ChapterVO chapterVo = new ChapterVO();
+            BeanUtils.copyProperties(eduChapter,chapterVo);
+            chapterVideoList.add(chapterVo);
+            //4遍历和此章节关联小节信息进行封装
+            List<VideoVO> videoVos = new ArrayList<>();
             for (int m = 0; m < videoList.size(); m++) {
                 EduVideo eduVideo = videoList.get(m);
-                if (eduChapter.getId().equals(eduVideo.getChapterId())) {
-                    VideoVO videoVO = new VideoVO();
-                    BeanUtils.copyProperties(eduVideo, videoVO);
-                    VideoVOList.add(videoVO);
+                if(eduChapter.getId().equals(eduVideo.getChapterId())){
+                    VideoVO videoVo = new VideoVO();
+                    BeanUtils.copyProperties(eduVideo,videoVo);
+                    videoVos.add(videoVo);
                 }
-                chapterVO.setChildren(VideoVOList);
+                chapterVo.setChildren(videoVos);
             }
 
         }
 
-
-
-
-        return chapterVOList;
+        return chapterVideoList;
     }
+
+
+
 }

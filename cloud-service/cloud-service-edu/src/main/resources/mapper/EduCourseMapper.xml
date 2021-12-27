@@ -16,4 +16,24 @@
                      INNER JOIN vesns_edu.edu_subject es2 ON ec.subject_id = es2.id
         WHERE ec.id = #{id};
     </select>
+
+    <select id="getCourseWebVo" resultType="cn.vesns.eduservice.entity.vo.CourseWebVo">
+        SELECT ec.id,
+               ec.title,
+               ec.price,
+               ec.cover,
+               ec.lesson_num AS lessonNum,
+               ec.buy_count  AS buyCount,
+               ec.view_count AS viewCount,
+               ecd.description,
+               et.id         AS teacherId,
+               et.name       AS teacherName,
+               et.intro,
+               et.avatar
+        FROM vesns_edu.edu_course ec
+                     INNER JOIN vesns_edu.edu_course_description ecd ON ec.id = ecd.id
+                     INNER JOIN vesns_edu.edu_teacher et ON ec.teacher_id = et.id
+        WHERE ec.status = 'Normal'
+          AND ec.id = #{id}
+    </select>
 </mapper>

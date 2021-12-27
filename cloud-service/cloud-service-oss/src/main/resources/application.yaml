@@ -13,7 +13,7 @@ spring:
 
 aliyun:
   oss:
-    endpoint: oss-cn-chengdu.aliyuncs.com
-    keyId: LTAI5t7ioARg3RzBHwQi47KG # 访问身份验证中用到用户标识
-    keySecret: X3V9KEjCnYcH8u3ERudFpti7SHrWr6 # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    endpoint:
+    keyId: # 访问身份验证中用到用户标识
+    keySecret:  # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
     bucketName: cloud-beakermall

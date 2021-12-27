@@ -16,6 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date: 2021-12-20 23:23
  */
 
+@EnableFeignClients
 @EnableDiscoveryClient
 @MapperScan("cn.vesns.ucenter.mapper")
 @SpringBootApplication

@@ -143,11 +143,19 @@
   </div>
 </template>
 <script>
-import "~/assets/css/reset.css";
-import "~/assets/css/theme.css";
-import "~/assets/css/global.css";
-import "~/assets/css/web.css";
+import '~/assets/css/reset.css'
+import '~/assets/css/theme.css'
+import '~/assets/css/global.css'
+import '~/assets/css/web.css'
+import '~/assets/css/base.css'
+import '~/assets/css/activity_tab.css'
+import '~/assets/css/bottom_rec.css'
+import '~/assets/css/nice_select.css'
+import '~/assets/css/order.css'
+import '~/assets/css/swiper-3.3.1.min.css'
+import "~/assets/css/pages-weixinpay.css"
 import cookie from "js-cookie";
+import loginApi from "@/api/login";
 
 export default {
   data() {
@@ -164,19 +172,25 @@ export default {
     };
   },
   created() {
+    this.token = this.$route.query.token;
+    if (this.token) {
+      this.wxLogin();
+    }
+
     this.showInfo();
   },
   methods: {
-    // showInfo() {
-    //   // console.log(cookie.get("guli_ucenter"));
-    //   let jsonStr = cookie.get("guli_ucenter");
-    //   // console.log(jsonStr);
-    //   if (jsonStr) {
-    //     this.loginInfo = JSON.parse(jsonStr)
-    //     // this.loginInfo = jsonStr;
-    //   }
-    //   this.loginInfo = jsonStr;
-    // },
+    wxLogin() {
+      cookie.set("guli_ucenter", this.token, {
+        domain: "localhost",
+      });
+      // 查询用户信息
+      loginApi.login(this.user).then((response) => {
+        if (response.data.success) {
+          this.loginInfo = response.data.data.ucenterMember;
+        }
+      });
+    },
     showInfo() {
       let jsonStr = cookie.get("guli_ucenter");
       if (jsonStr) {

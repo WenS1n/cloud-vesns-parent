@@ -43,15 +43,15 @@ mybatis-plus:
 
 wx:
   open:
-    app_id: wxed9954c01bb89b47
-    app_secret: a7482517235173ddb4083788de60b90e
+    app_id:
+    app_secret:
 #    redirect_url: http://guli.shop/api/ucenter/wx/callback
-    redirect_url: http://guli:shop/api/ucenter/wx/callback
+    redirect_url:
 
 
 aliyun:
-  accessKey: LTAI4GGvwuQC9TMmBub74w96
-  accessKeySecret: ne6yPRQ8Ohwjh7qmJngzeLYlo6ihD4
+  accessKey:
+  accessKeySecret:
 feign:
   hystrix:
     enabled: true

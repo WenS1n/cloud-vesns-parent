@@ -23,15 +23,15 @@ spring:
 tencent:
   sms:
     # 配置腾讯云API密钥的SecretId
-    secretId: AKIDTmoa6ML3TdW7RUHn1yf6GnCKBl35pIUP
+    secretId:
     # 配置腾讯云API密钥的SecretKey
-    secretKey: f3A1buwhBPM2RZQ0JL6ZlhLioeDVWHkw
+    secretKey:
     # 配置短信应用的SDKAppID
-    appId: 1400586146
+    appId:
     # 配置签名内容
-    sign: "文盛的学习测试"
+    sign: ""
     # 配置模板ID
-    templateId: 1169905
+    templateId:
     # 配置过期时间
     expireTime: 5
     # 配置redis存储的key的前缀

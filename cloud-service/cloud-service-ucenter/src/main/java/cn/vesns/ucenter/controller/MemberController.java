@@ -8,9 +8,11 @@ import cn.vesns.ucenter.entity.vo.RegisterVo;
 import cn.vesns.ucenter.service.MemberService;
 import cn.vesns.utils.JwtUtils;
 import cn.vesns.utils.ResponseResult;
+import cn.vesns.vo.UcenterMemberForOrder;
 import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,6 +60,15 @@ public class MemberController {
         System.out.println("---------->"+ucenterMember);
         String s = JSON.toJSONString(ucenterMember);
         return ResponseResult.ok().data("ucenterMember",s);
+    }
+
+    @ApiOperation(value = "根据memberId获取用户信息跨模块")
+    @GetMapping("getUcenterInfoForOrder/{memberId}")
+    public UcenterMemberForOrder getUcenterInfoForOrder(@PathVariable("memberId") String memberId) {
+        UcenterMember ucenterMember = memberService.getById(memberId);
+        UcenterMemberForOrder ucenterMemberForOrder = new UcenterMemberForOrder();
+        BeanUtils.copyProperties(ucenterMember,ucenterMemberForOrder);
+        return ucenterMemberForOrder;
     }
 
 
